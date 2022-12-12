@@ -4,7 +4,7 @@ from 0 to 100
  */
 
 const printNum = () => {
-    for (var i = 0; i <= 100; i++) {
+    for (let i = 0; i <= 100; i++) {
         setTimeout(() => console.log(i), 1000)
     }
 }
@@ -22,12 +22,26 @@ You only need to produce the same array as expected result, no need to consider 
 possibility.
  */
 
-let myArr = ['12-24-2014', '09-2022-23', '12-30-2021', '08-02-2021', '07-15-2018', '2019-12-14', '2022-14-12']
-const fixDate = (array) => {
-    /* provide your code here */
-}
-let newArr = fixDate(myArr)
-console.log(newArr)
+let myArr = [
+    "12-24-2014",
+    "09-2022-23",
+    "12-30-2021",
+    "08-02-2021",
+    "07-15-2018",
+    "2019-12-14",
+    "2022-14-12",
+  ];
+  
+  const fixDate = (array) => {
+    return array.map((date) => {
+      const dateArr = date.split("-").sort(function(a, b){return a - b} );
+      const datesArr = [dateArr[1], dateArr[0], dateArr[2]].join("-");
+      return datesArr;
+    });
+  };
+  
+  let newArr = fixDate(myArr);
+  console.log(newArr);
 
 /*
 3. Counter function
