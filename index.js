@@ -59,7 +59,6 @@ const counter = (from, to) => {
     let mins = mod1 / (1000*60)
     let mod2 = mod1 % (1000*60)
     let secs = mod2 / 1000
-    console.log(mod + 'rest')
     return `${Math.floor(days)} days - ${Math.floor(hours)} hours - ${Math.floor(mins)} minutes - ${Math.floor(secs)} seconds`
 }
 const timer = counter()
