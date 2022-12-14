@@ -75,15 +75,46 @@ console.log(timer);
 The data fetched from url should be displayed in index.html.
 */
 
-const getAllCountries = () => {
-  /* provide your code here */
-};
+let url = "https://restcountries.com/v3.1/all";
+
+async function getAllCountries(url) {
+  const response = await fetch(url);
+  let data = await response.json();
+  console.log(data);
+  let sorted = data.sort((a, b) => {
+    return a.name.official.localeCompare(b.name.official)
+  });
+  let container = document.querySelector(".container");
+  for (i = 0; i < data.length; i++) {
+    let countryCard = document.createElement("div");
+    
+    countryCard.classList.add("countrycard");
+    container.appendChild(countryCard);
+    let countryName = document.createElement('h3')
+    countryCard.appendChild(countryName)
+    countryName.innerHTML = sorted[i].name.common
+    let countryCapital = document.createElement('h3')
+    countryCard.appendChild(countryCapital)
+    countryCapital.innerHTML = "capital: "+ sorted[i].capital
+    let countryPopulation = document.createElement('h3')
+    countryCard.appendChild(countryPopulation)
+    countryPopulation.innerHTML = "population: "+ sorted[i].population
+    let countryRegion = document.createElement('h4')
+    countryCard.appendChild(countryRegion)
+    countryRegion.innerHTML = "region: "+ sorted[i].region
+    let countryFlag = document.createElement('div')
+    countryCard.appendChild(countryFlag)
+    countryFlag.innerHTML = "<img src="+ sorted[i].flags.svg +" width='100px' height='50px'/>"
+}
+}
 
 const getSingleCountry = () => {
   /* provide your code here */
+const single_url =`https://restcountries.com/v3.1/name/${name}` 
+
 };
 
-getAllCountries();
+getAllCountries(url);
 
 /*
 5. Provide logic for function generateNewFolderName, which receive an array as argument. Everytime the function gets called,
