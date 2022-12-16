@@ -1,5 +1,28 @@
-# JavaScript Assignment !!
+# JavaScript Assignment 
 
-* Fork the repo and clone forked repo. Add .gitignore to exclude .git folder or any other unneccessary files.
-* Assignments are described in the index.js
-* No extra library should be installed to help with JavaScript assignment, apart from SASS if you want to write style accordingly.
+![Generic badge](https://img.shields.io/badge/CSS-v.3-green.svg)
+![Generic badge](https://img.shields.io/badge/HTML-v.5-blue.svg)
+
+
+## Description
+
+Several excercises contains different tasks with fetching data from API, operations with data, Classes etc.
+
+
+## Project structure
+```
+C:.
+    .gitignore
+    index.html
+    index.js
+    README.md
+    style.css
+```
+## Instructions
+Clone the repository 
+`https://github.com/dwarfsuomalainen/fs13-JavaScript.git`<br>
+Project deployed on gh-pages (https://dwarfsuomalainen.github.io/fs13-CSS-SASS/)
+
+
+
+

@@ -17,8 +17,8 @@ myArr = ['12-24-2014', '09-2022-23', '12-30-2021', '08-02-2021', '07-15-2018', '
 the array above has serveral dates, written in order month-day-year
 Write the code inside function fixDate(array) below to transform the array to new
 format dates day-month-year
-expected result: ['24-12-2014', '23-09-2022', '30-12-2021', '08-02-2021', '15-07-2018', '14-12-2019', '14-12-2022'] . 
-You only need to produce the same array as expected result, no need to consider other 
+expected result: ['24-12-2014', '23-09-2022', '30-12-2021', '08-02-2021', '15-07-2018', '14-12-2019', '14-12-2022'] .
+You only need to produce the same array as expected result, no need to consider other
 possibility.
  */
 
@@ -82,36 +82,63 @@ async function getAllCountries(url) {
   let data = await response.json();
   console.log(data);
   let sorted = data.sort((a, b) => {
-    return a.name.official.localeCompare(b.name.official)
+    return a.name.common.localeCompare(b.name.common);
   });
   let container = document.querySelector(".container");
-  for (i = 0; i < data.length; i++) {
+  for (i = 0; i < sorted.length; i++) {
     let countryCard = document.createElement("div");
-    
+
     countryCard.classList.add("countrycard");
     container.appendChild(countryCard);
-    let countryName = document.createElement('h3')
-    countryCard.appendChild(countryName)
-    countryName.innerHTML = sorted[i].name.common
-    let countryCapital = document.createElement('h3')
-    countryCard.appendChild(countryCapital)
-    countryCapital.innerHTML = "capital: "+ sorted[i].capital
-    let countryPopulation = document.createElement('h3')
-    countryCard.appendChild(countryPopulation)
-    countryPopulation.innerHTML = "population: "+ sorted[i].population
-    let countryRegion = document.createElement('h4')
-    countryCard.appendChild(countryRegion)
-    countryRegion.innerHTML = "region: "+ sorted[i].region
-    let countryFlag = document.createElement('div')
-    countryCard.appendChild(countryFlag)
-    countryFlag.innerHTML = "<img src="+ sorted[i].flags.svg +" width='100px' height='50px'/>"
-}
+    let countryName = document.createElement("h3");
+    countryCard.appendChild(countryName);
+    countryName.innerHTML = sorted[i].name.common;
+    let countryCapital = document.createElement("h3");
+    countryCard.appendChild(countryCapital);
+    countryCapital.innerHTML = "capital: " + sorted[i].capital;
+    let countryPopulation = document.createElement("h3");
+    countryCard.appendChild(countryPopulation);
+    countryPopulation.innerHTML = "population: " + sorted[i].population;
+    let countryRegion = document.createElement("h4");
+    countryCard.appendChild(countryRegion);
+    countryRegion.innerHTML = "region: " + sorted[i].region;
+    let countryFlag = document.createElement("div");
+    countryCard.appendChild(countryFlag);
+    countryFlag.innerHTML =
+      "<img src=" + sorted[i].flags.svg + " width='100px' height='50px'/>";
+  }
 }
 
-const getSingleCountry = () => {
-  /* provide your code here */
-const single_url =`https://restcountries.com/v3.1/name/${name}` 
-
+const getSingleCountry = async () => {
+  const input = document.getElementById("search_input");
+  const text = input.value;
+  console.log(text);
+  const jsondata = await fetch(`https://restcountries.com/v3.1/name/${text}`);
+  const data = await jsondata.json();
+  if (data.message) {
+    console.log(data);
+  } else {
+    let output = document.createElement("div");
+    output.classList.add("output");
+    let display = document.querySelector(".display");
+    display.appendChild(output);
+    let countryName = document.createElement("h3");
+    output.appendChild(countryName);
+    countryName.innerHTML = data[0].name.common;
+    let countryCapital = document.createElement("h3");
+    output.appendChild(countryCapital);
+    countryCapital.innerHTML = "capital: " + data[0].capital;
+    let countryPopulation = document.createElement("h3");
+    output.appendChild(countryPopulation);
+    countryPopulation.innerHTML = "population: " + data[0].population;
+    let countryRegion = document.createElement("h4");
+    output.appendChild(countryRegion);
+    countryRegion.innerHTML = "region: " + data[0].region;
+    let countryFlag = document.createElement("div");
+    output.appendChild(countryFlag);
+    countryFlag.innerHTML =
+      "<img src=" + data[0].flags.svg + " width='100px' height='50px'/>";
+  }
 };
 
 getAllCountries(url);
@@ -125,6 +152,11 @@ to array, and so on.
 
 const generateNewFolderName = (existingFolders) => {
   /*  provide your code here */
+  if (existingFolders.length) {
+    existingFolders.push(`New folder (${existingFolders.length})`);
+  } else {
+    existingFolders.push("New Folder");
+  }
 };
 
 let folder = [];
@@ -134,27 +166,67 @@ generateNewFolderName(folder);
 generateNewFolderName(folder);
 console.log(folder); //expect to see ['New Folder', 'New Folder (1)', 'New Folder (2)', 'New Folder (3)']
 
-/* 
+/*
 6. Complete class Book:
 - class Book should have 3 properties: title (read-only, must be a string but cannot be empty), cost (private, must be positive number) and profit (private, positive number > 0 and =< 0.5)
 (error should be thrown if data is not valid)
 - give the logic to get book's price and profit separately.
-- give the logics to increase and decrease the price with a certain amount 
+- give the logics to increase and decrease the cost with a certain amount
 - give the logic to calculate price based on cost and profit. For example: cost 14, profit 0.3 => expected price is 20.
 
-Complete class TaxableBook: 
-- inherit Book, but have 1 more private parameter in the constructor: taxRate. 
-- give the logic to calculate price with taxRate. For example: 
-cost 14, profit 0.3 , tax 24% => expected price is 30.43
-*/
+Complete class TaxableBook:
+- inherit Book, but have 1 more private parameter in the constructor: taxRate.
+- give the logic to calculate price with taxRate. For example:
+cost 14, profit 0.3 , tax 24% => expected price is 30.43*/
+
 class Book {
-  _title;
-  constructor(title, cost, profit) {}
+  #title;
+  #cost;
+  #profit;
+  constructor(title, cost, profit) {
+    if (title || cost <= 0 || (profit > 0 && profit < 0.5)) {
+      this.#profit = profit;
+      this.#title = title;
+      this.#cost = cost;
+    } else {
+      throw new Error("Data is not valid");
+    }
+  }
+  get getTitle() {
+    return this.#title;
+  }
+  get getCost() {
+    return this.#cost;
+  }
+  get getProfit() {
+    return this.#profit;
+  }
+
+  changeCost(amount) {
+    if (this.#cost + amount <= 0) {
+      throw new Error("Cost should be greater than zero");
+    } else {
+      this.#cost += amount;
+    }
+  }
+
+  calculatePrice() {
+    return this.#cost / (1 - this.profit);
+  }
 }
 
-class TaxableBook {
-  /* provide your code here */
+class TaxableBook extends Book {
+  #taxRate;
+  constructor(title, cost, profit, taxRate) {
+    super(title, cost, profit);
+    if (taxRate <= 0 || taxRate + profit > 1) {
+      throw new Error("Invalid data");
+    }
+    this.#taxRate = taxRate;
+  }
+  calculatePrice() {
+    return this.getCost / (1 - this.getProfit - this.#taxRate);
+  }
 }
-
 const book1 = new Book("The Power of Habits", 14, 0.3);
-const book2 = new TaxableBook("The Power of Habits", 14, 0.3, 24);
+const book2 = new TaxableBook("The Power of Habits", 14, 0.3, 0.24);
