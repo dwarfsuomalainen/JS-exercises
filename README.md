@@ -21,8 +21,4 @@ C:.
 ## Instructions
 Clone the repository 
 `https://github.com/dwarfsuomalainen/fs13-JavaScript.git`<br>
-Project deployed on gh-pages (https://dwarfsuomalainen.github.io/fs13-CSS-SASS/)
-
-
-
-
+Project deployed on gh-pages (https://dwarfsuomalainen.github.io/fs13-JavaScript/)
